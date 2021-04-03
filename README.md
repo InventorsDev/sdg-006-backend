@@ -1,8 +1,8 @@
 
 # Team-sdg-006--MedHouse
-barebones setup for JavaScript / Node projects replace this with a one-liner phrase describing this project or app
+<!-- barebones setup for JavaScript / Node projects replace this with a one-liner phrase describing this project or app
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f3c3ed5e9ab9444192f1b72c4982f505)](https://app.codacy.com/gh/BuildForSDG/Team-078-EmergencyApp?utm_source=github.com&utm_medium=referral&utm_content=BuildForSDG/Team-078-EmergencyApp&utm_campaign=Badge_Grade_Settings)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f3c3ed5e9ab9444192f1b72c4982f505)](https://app.codacy.com/gh/BuildForSDG/Team-078-EmergencyApp?utm_source=github.com&utm_medium=referral&utm_content=BuildForSDG/Team-078-EmergencyApp&utm_campaign=Badge_Grade_Settings) -->
 
 
 ## About
