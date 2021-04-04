@@ -51,7 +51,7 @@ First, you can send a mail to buildforsdg@andela.com to indicate your interest, 
 
 ## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [owoputikehinde@gmail.com](mailto:owoputikehinde@gmail.com). All security vulnerabilities will be promptly addressed.
+If you discover a security vulnerability within Laravel, please send an e-mail to Owoputi Kehinde via [owoputikehinde@gmail.com](mailto:owoputikehinde@gmail.com). All security vulnerabilities will be promptly addressed.
 
 ## License
 
