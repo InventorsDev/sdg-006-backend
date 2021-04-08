@@ -9,8 +9,10 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 use App\Traits\UsesUuidTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Hash;
+use App\Notifications\EmailVerificationNotification;
+use App\Notifications\PasswordResetNotification;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use Notifiable, UsesUuidTrait, SoftDeletes;
 
@@ -20,7 +22,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'firstname', 'lastname', 'phone_number', 'email', 'password', 'google_id'
     ];
 
     /**
@@ -59,5 +61,21 @@ class User extends Authenticatable
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = Hash::make($value);
+    }
+
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new EmailVerificationNotification());
+    }
+
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new PasswordResetNotification($token));
     }
 }
