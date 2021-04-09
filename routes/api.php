@@ -19,7 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 // Route::post('/sign_in', 'Api\Auth\LoginController');
-Route::post('/sign_up_with_email', 'Api\Auth\RegistrationController');
+// Route::post('/sign_up_with_email', 'Api\Auth\RegistrationController');
 Route::get('/sign_in_with_google', 'Api\Auth\SocialiteController@redirectToGoogle');
 Route::get('/google_signin_callback', 'Api\Auth\SocialiteController@handleGoogleCallback');
 Route::get("email/verify/{id}/{hash}", "Api\Auth\VerificationApiController@verify")->name("verification.verify");
