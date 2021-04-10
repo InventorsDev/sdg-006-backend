@@ -20,9 +20,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 // Route::post('/sign_in', 'Api\Auth\LoginController');
 // Route::post('/sign_up_with_email', 'Api\Auth\RegistrationController');
-Route::get('/sign_in_with_google', 'Api\Auth\SocialiteController@redirectToGoogle');
-Route::get('/google_signin_callback', 'Api\Auth\SocialiteController@handleGoogleCallback');
-Route::get("email/verify/{id}/{hash}", "Api\Auth\VerificationApiController@verify")->name("verification.verify");
-Route::get("email/resend", "Api\Auth\VerificationApiController@resend")->name("verification.resend");
-Route::post('/password/email', 'Api\Auth\ForgotPasswordController@sendResetLinkEmail');
-Route::post('/password/reset', 'Api\Auth\ResetPasswordController@reset');
+Route::get('/sign_in_with_google', 'API\Auth\SocialiteController@redirectToGoogle');
+Route::get('/google_signin_callback', 'API\Auth\SocialiteController@handleGoogleCallback');
+Route::get("email/verify/{id}/{hash}", "API\Auth\VerificationApiController@verify")->name("verification.verify");
+Route::get("email/resend", "API\Auth\VerificationApiController@resend")->name("verification.resend");
+Route::post('/password/email', 'API\Auth\ForgotPasswordController@sendResetLinkEmail');
+Route::post('/password/reset', 'API\Auth\ResetPasswordController@reset');
