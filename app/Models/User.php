@@ -11,11 +11,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Hash;
 use App\Notifications\EmailVerificationNotification;
 use App\Notifications\PasswordResetNotification;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use Notifiable, UsesUuidTrait, SoftDeletes;
+    use Notifiable, UsesUuidTrait, SoftDeletes, HasRoles;
 
+    protected $guard_name = 'api';
     /**
      * The attributes that are mass assignable.
      *
@@ -77,5 +79,25 @@ class User extends Authenticatable implements JWTSubject
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new PasswordResetNotification($token));
+    }
+
+    public function scopeisMedhousePatient($query)
+    {
+        return $query->role('medhouse_patients');
+    }
+
+    public function scopeisMedhousePatientsDetails($query, $id)
+    {
+        return $query->role('medhouse_patients')->where('id', $id);
+    }
+
+    public function scopeisMedhouseSpecialist($query)
+    {
+        return $query->role('medhouse_specialist');
+    }
+
+    public function scopeisMedhouseSpecialistrDetails($query, $id)
+    {
+        return $query->role('medhouse_specialist')->where('id', $id);
     }
 }
