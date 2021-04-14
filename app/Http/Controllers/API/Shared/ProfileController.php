@@ -4,61 +4,58 @@ namespace App\Http\Controllers\API\Shared;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Http\Resources\Specialist\SpecialistCollection;
+use App\Http\Resources\Specialist\Specialist as SpecialistResource;
+use App\Http\Resources\Patient\PatientCollection;
+use App\Http\Resources\Patient\Patient as PatientResource;
+use App\Repositories\Eloquent\Patient\PatientRepositoryInterface; 
+use App\Repositories\Eloquent\Specialist\SpecialistRepositoryInterface; 
+use App\Http\Requests\Profile\ProfileUpdateRequest;
 
 class ProfileController extends Controller
 {
+    private $userDetails;
+    private $patientRepository;
+    private $specialistRepository;
+
+    public function __construct(
+        PatientRepositoryInterface $patientRepository, 
+        SpecialistRepositoryInterface $specialistRepository
+        )
+    {
+        $this->middleware(['auth:api']);
+        $this->patientRepository = $patientRepository;
+        $this->specialistRepository = $specialistRepository;
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function showBasicProfile(Request $request)
     {
-        //
+        if ($request->is("api/v1/patients/*")) {
+            $this->userDetails = $this->patientRepository->find(auth('api')->user()->id);
+            return response()->json(new PatientResource($this->userDetails), 200);
+        }elseif($request->is("api/v1/specialists/*")) {
+            $this->userDetails = $this->specialistRepository->getProfileDetails();
+            return response()->json(new SpecialistResource($this->userDetails), 200);
+        }else{
+            return "do nothing for now";
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    
+    public function updatePatientProfile(ProfileUpdateRequest $request)
     {
-        //
+        $this->patientRepository->updatePatientDetails($request->validated());
+        return response()->json(["success"=> ["message"=>"Profile updated successfully"]], 200);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function updateSpecialistProfile(ProfileUpdateRequest $request)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $this->specialistRepository->updateSpecialistDetails($request->validated());
+        return response()->json(["success"=> ["message"=>"Profile updated successfully"]], 200);
     }
 }

@@ -3,6 +3,9 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -50,6 +53,29 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        if ($exception instanceof UnauthorizedHttpException) {
+            $preException = $exception->getPrevious();
+            // dd($preException);
+            if ($preException instanceof
+                          \Tymon\JWTAuth\Exceptions\TokenExpiredException) {
+                return response()->json(['error' => 'TOKEN_EXPIRED'], 401);
+            } else if ($preException instanceof
+                          \Tymon\JWTAuth\Exceptions\TokenInvalidException) {
+                return response()->json(['error' => 'TOKEN_INVALID'], 401);
+            } else if ($preException instanceof
+                     \Tymon\JWTAuth\Exceptions\TokenBlacklistedException) {
+                 return response()->json(['error' => 'TOKEN_BLACKLISTED'], 401);
+           }
+           if ($exception->getMessage() === 'Token not provided') {
+               return response()->json(['error' => 'Token not provided'], 401);
+           }
+        }
+        if ($exception instanceof ModelNotFoundException && $request->wantsJson()) {
+            return response()->json(['error' => "The resource on which operation is to be carried on does not exist"], 404);
+        }
+        if ($exception instanceof MethodNotAllowedHttpException && $request->wantsJson()) {
+            return response()->json(['error' => "Request Method not supported by this Resource"], 405);
+        }
         return parent::render($request, $exception);
     }
 }

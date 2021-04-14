@@ -30,10 +30,14 @@ Route::prefix('v1')->group(function () {
 
     Route::prefix('patients')->group(function () {
         Route::get('/', 'API\Patient\PatientController@index');
+        Route::get('/profile', 'API\Shared\ProfileController@showBasicProfile');
+        Route::put('/profile/update', 'API\Shared\ProfileController@updatePatientProfile');
     });
 
     Route::prefix('specialists')->group(function () {
         Route::get('/', 'API\Specialist\SpecialistController@index');
+        Route::get('/profile', 'API\Shared\ProfileController@showBasicProfile');
+        Route::put('/profile/update', 'API\Shared\ProfileController@updateSpecialistProfile');
     });
 
 });

@@ -27,4 +27,14 @@ class PatientRepository extends BaseRepository implements PatientRepositoryInter
    {
        return $this->model->isMedhousePatient()->get();    
    }
+
+   public function getProfileDetails() 
+   {
+        return $this->model->where('id', auth('api')->user()->id)->isMedhousePatient()->get();
+   }
+
+   public function updatePatientDetails(Array $array)
+   {
+       return $data_update = $this->model->where('id', auth('api')->user()->id)->isMedhousePatient()->firstOrFail()->update($array);
+   }
 }
