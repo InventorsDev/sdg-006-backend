@@ -7,4 +7,8 @@ use Illuminate\Support\Collection;
 interface SpecialistRepositoryInterface
 {
    public function all(): Collection;
+
+   public function getProfileDetails();
+
+   public function updateSpecialistDetails(Array $array);
 }

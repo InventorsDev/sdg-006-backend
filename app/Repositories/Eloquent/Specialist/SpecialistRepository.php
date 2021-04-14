@@ -27,4 +27,14 @@ class SpecialistRepository extends BaseRepository implements SpecialistRepositor
    {
         return $this->model->isMedhouseSpecialist()->get(); 
    }
+
+   public function getProfileDetails() 
+   {
+        return $this->model->where('id', auth('api')->user()->id)->isMedhouseSpecialist()->get();
+   }
+
+   public function updateSpecialistDetails(Array $array)
+   {
+        return $data_update = $this->model->where('id', auth('api')->user()->id)->isMedhouseSpecialist()->firstOrFail()->update($array);
+   }
 }
