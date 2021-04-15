@@ -13,6 +13,9 @@ use App\Repositories\Eloquent\Specialist\SpecialistRepository;
 use App\Repositories\Eloquent\Patient\PatientRepositoryInterface; 
 use App\Repositories\Eloquent\Patient\PatientRepository; 
 
+use App\Repositories\Eloquent\Shared\User\UserRepositoryInterface; 
+use App\Repositories\Eloquent\Shared\User\UserRepository; 
+
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -27,6 +30,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(EloquentRepositoryInterface::class, BaseRepository::class);
         $this->app->bind(SpecialistRepositoryInterface::class, SpecialistRepository::class);
         $this->app->bind(PatientRepositoryInterface::class, PatientRepository::class);
+        $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
     }
 
     /**

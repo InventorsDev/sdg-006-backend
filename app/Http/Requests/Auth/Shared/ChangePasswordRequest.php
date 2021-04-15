@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Profile;
+namespace App\Http\Requests\Auth\Shared;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -13,7 +13,7 @@ class ChangePasswordRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return auth('api')->check();;
     }
 
     /**
@@ -24,7 +24,26 @@ class ChangePasswordRequest extends FormRequest
     public function rules()
     {
         return [
+            'password' => 'required|min:6|confirmed',
+        ];
+    }
+
+    /**
+     * Custom message for validation
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
             //
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            //
+        ]);
     }
 }

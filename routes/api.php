@@ -27,6 +27,7 @@ Route::prefix('v1')->group(function () {
     Route::get("email/resend", "API\Auth\VerificationApiController@resend")->name("verification.resend");
     Route::post('/password/email', 'API\Auth\ForgotPasswordController@sendResetLinkEmail');
     Route::post('/password/reset', 'API\Auth\ResetPasswordController@reset');
+    Route::post('/password/change', 'API\Shared\Auth\UpdateAccountPassword');
 
     Route::prefix('patients')->group(function () {
         Route::get('/', 'API\Patient\PatientController@index');
